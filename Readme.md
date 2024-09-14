@@ -8,8 +8,7 @@ NexusNGO is a platform designed to connect donors with NGOs, facilitating donati
 - Usage
 - [Project Structure](#project-structure)
 - Features
-- Contributing
-- License
+
 
 ## Installation
 
