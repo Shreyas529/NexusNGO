@@ -8,6 +8,7 @@ NexusNGO is a platform designed to connect donors with NGOs, facilitating donati
 - Usage
 - [Project Structure](#project-structure)
 - Features
+- Testing
 
 
 ## Installation
@@ -77,11 +78,35 @@ NexusNGO/
 - **[`NexusNGO/Ngos/`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2Fsathvik_rao%2FColossus%2FNexus_Public%2FNexusNGO%2FNgos%2F%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22e01f52a6-1a46-49a1-b8fc-abdbb680daaf%22%5D "/home/sathvik_rao/Colossus/Nexus_Public/NexusNGO/Ngos/")**: Modules for NGO-related functionalities, including registration and profile updates.
 - **[`NexusNGO/Users/`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2Fsathvik_rao%2FColossus%2FNexus_Public%2FNexusNGO%2FUsers%2F%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22e01f52a6-1a46-49a1-b8fc-abdbb680daaf%22%5D "/home/sathvik_rao/Colossus/Nexus_Public/NexusNGO/Users/")**: Modules for user-related functionalities, including searching and displaying NGOs.
 
-## Features
+## NexusNGO testing
 
-- **Donor Interface**: User-friendly interface for donors to search for NGOs, donate items, and funds.
-- **NGO Management**: Easy-to-use interface for NGOs to manage their profiles and interact with donors.
-- **Blockchain Integration**: Fetch and display recent transactions using blockchain technology.
-- **Firebase Integration**: Secure authentication and database management using Firebase.
-- **Image Detection**: Extract text from images to facilitate item donations.
+### Database testing:
 
+The Firebase database is first initialised, and a testing class is created, inheriting the Python unittest library.
+
+#### Features
+
+- **Add an NGO and verify the added data** - ```ngo_name```, ```category```, ```needs``` and ```email```.
+- **Update NGO details** - (measures have been taken to re-authenticate and retry in case of an expired session)
+	-```needs```
+	-```description```
+	-```phone```
+	-```category```
+  - After these are updated, retrieval and verification is performed
+
+
+### LLM (Image Detection) testing:
+
+#### Features
+
+- **Image Input** - For an image of a shirt given as input, perform an ```AssertTrue``` to check if there is any mention of a shirt in the output - an indication of a correct response.
+- **Text Input** - Similarly, when the donation contact incluedes the mentions of a 'Shirt' and 'Pant', check if the reponse too mentions those.
+- **Image Encoding** - First encoding the image using the function in the application, and then using Python's built-in functions to encode, and then compare the encodings.
+
+
+### Blockchain testing:
+
+#### Features:
+
+- A public key is used to retrieve transaction data from the last 3 minutes. The results of the fetch are verified
+- A 'mock' version of the pandas ```to_csv``` method is created, and this checks if the ```to_csv``` method was called exactly once in the ```get_transactions_last_3_minutes()``` method, with the right arguments.
