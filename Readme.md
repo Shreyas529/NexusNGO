@@ -4,12 +4,13 @@ NexusNGO is a platform designed to connect donors with NGOs, facilitating donati
 
 ## Table of Contents
 
-- Installation
-- Usage
+- [Installation](#installation)
+- [Usage](#usage)
 - [Project Structure](#project-structure)
-- Features
-- Testing
+- [Features](#features)
+- [Testing](#testing)
 
+---
 
 ## Installation
 
@@ -26,23 +27,28 @@ NexusNGO is a platform designed to connect donors with NGOs, facilitating donati
 
 3. **Set up environment variables:**
     - Create a `.env` file in the root directory.
-    - Add your environment variables (e.g., [`INFURA_API_KEY`](command:_github.copilot.openSymbolFromReferences?%5B%22%22%2C%5B%7B%22uri%22%3A%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2Fsathvik_rao%2FColossus%2FNexus_Public%2Fblockchain%2Fblockchain.py%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22pos%22%3A%7B%22line%22%3A9%2C%22character%22%3A60%7D%7D%5D%2C%22e01f52a6-1a46-49a1-b8fc-abdbb680daaf%22%5D "Go to definition") for blockchain interaction).
+    - Add your environment variables (e.g., `INFURA_API_KEY` for blockchain interaction).
 
 4. **Run the application:**
     ```sh
     streamlit run NexusNGO/app.py
     ```
 
+---
+
 ## Usage
 
-- **Donors:**
-  - Navigate through the sidebar to donate items, donate funds, search for NGOs, or view top NGOs.
-  - Use the search functionality to find NGOs based on specific needs.
+### For Donors:
+- Navigate through the sidebar to:
+  - Donate items or funds.
+  - Search for NGOs based on specific needs.
+  - View top NGOs.
 
-- **NGOs:**
-  - Log in or register through the sidebar.
-  - Manage your profile, update information, and interact with donors.
+### For NGOs:
+- Log in or register through the sidebar.
+- Manage your profile, update information, and interact with donors.
 
+---
 ## Project Structure
 
 ```
@@ -78,35 +84,37 @@ NexusNGO/
 - **[`NexusNGO/Ngos/`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2Fsathvik_rao%2FColossus%2FNexus_Public%2FNexusNGO%2FNgos%2F%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22e01f52a6-1a46-49a1-b8fc-abdbb680daaf%22%5D "/home/sathvik_rao/Colossus/Nexus_Public/NexusNGO/Ngos/")**: Modules for NGO-related functionalities, including registration and profile updates.
 - **[`NexusNGO/Users/`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fhome%2Fsathvik_rao%2FColossus%2FNexus_Public%2FNexusNGO%2FUsers%2F%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%2C%22e01f52a6-1a46-49a1-b8fc-abdbb680daaf%22%5D "/home/sathvik_rao/Colossus/Nexus_Public/NexusNGO/Users/")**: Modules for user-related functionalities, including searching and displaying NGOs.
 
-## NexusNGO testing
+## Features
 
-### Database testing:
+### Database Testing:
+The Firebase database is initialized, and a testing class is created using Python's `unittest` library.
 
-The Firebase database is first initialised, and a testing class is created, inheriting the Python unittest library.
+- **Add an NGO and verify the added data**: Check `ngo_name`, `category`, `needs`, and `email`.
+- **Update NGO details**: Measures are taken to re-authenticate and retry in case of an expired session.
+  - Update fields: `needs`, `description`, `phone`, and `category`.
+  - Verify the updated data after retrieval.
 
-#### Features
+### LLM (Image Detection) Testing:
+- **Image Input**: For an image of a shirt, perform an `AssertTrue` to check if the output mentions "shirt."
+- **Text Input**: When the donation contact includes "Shirt" and "Pant," verify that the response mentions these items.
+- **Image Encoding**: Compare the encoding of an image using the application's function with Python's built-in encoding functions.
 
-- **Add an NGO and verify the added data** - ```ngo_name```, ```category```, ```needs``` and ```email```.
-- **Update NGO details** - (measures have been taken to re-authenticate and retry in case of an expired session)
-	-```needs```
-	-```description```
-	-```phone```
-	-```category```
-  - After these are updated, retrieval and verification is performed
+### Blockchain Testing:
+- **Transaction Retrieval**: Use a public key to fetch transaction data from the last 3 minutes and verify the results.
+- **Mock CSV Export**: Create a mock version of the pandas `to_csv` method to ensure it is called exactly once in the `get_transactions_last_3_minutes()` method with the correct arguments.
 
+---
 
-### LLM (Image Detection) testing:
+## Testing
 
-#### Features
+### Database Testing:
+- **Add and Verify NGO Data**: Ensure that NGO details are correctly added and retrieved.
+- **Update NGO Details**: Verify that updates to NGO profiles are accurately reflected in the database.
 
-- **Image Input** - For an image of a shirt given as input, perform an ```AssertTrue``` to check if there is any mention of a shirt in the output - an indication of a correct response.
-- **Text Input** - Similarly, when the donation contact incluedes the mentions of a 'Shirt' and 'Pant', check if the reponse too mentions those.
-- **Image Encoding** - First encoding the image using the function in the application, and then using Python's built-in functions to encode, and then compare the encodings.
+### LLM (Image Detection) Testing:
+- **Image and Text Input**: Validate the accuracy of image-to-text and text processing functionalities.
+- **Image Encoding**: Ensure consistency in image encoding methods.
 
-
-### Blockchain testing:
-
-#### Features:
-
-- A public key is used to retrieve transaction data from the last 3 minutes. The results of the fetch are verified
-- A 'mock' version of the pandas ```to_csv``` method is created, and this checks if the ```to_csv``` method was called exactly once in the ```get_transactions_last_3_minutes()``` method, with the right arguments.
+### Blockchain Testing:
+- **Transaction Fetching**: Confirm that transaction data is correctly retrieved and exported.
+- **Mock CSV Export**: Verify the correct usage of the `to_csv` method in blockchain interactions..
