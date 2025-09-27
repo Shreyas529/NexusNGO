@@ -1,5 +1,4 @@
 # Nexus NGO
-
 NexusNGO is a platform designed to connect donors with NGOs, facilitating donations of items and funds. The platform also provides a user-friendly interface for NGOs to manage their profiles and interact with donors.
 
 ## Table of Contents
